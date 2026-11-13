@@ -11,11 +11,13 @@
 
 领取免费份额之前，必须先在 X（原 Twitter）发帖分享官网链接。未发帖分享者请勿直接调用 claimFree()。
 
-    我发现了一个新的币安 Agent ID 矿场：金脉矿场 GoldVein（VEIN）
+    430+ free claims in the FIRST HOUR 🔥
 
-    免费领 1 份 = 20,000 VEIN
+    GoldVein (VEIN) — Agent ID mining farm on BSC
 
-    八档阶梯铸造，六阶矿机挖 VEIN
+    1 free share = 20,000 VEIN
+
+    8-tier sale, 6-tier mining rigs — mining starts tomorrow
 
     https://goldvein-bsc.github.io/goldvein/
 
