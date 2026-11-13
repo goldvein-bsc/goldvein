@@ -11,7 +11,12 @@
 
 领取免费份额之前，必须先在 X（原 Twitter）发帖分享官网链接。未发帖分享者请勿直接调用 claimFree()。
 
-    我发现了一个新的币安 Agent ID 矿场：金脉矿场 GoldVein。免费领 1 份，其余八档阶梯铸造，六阶矿机挖 VEIN。
+    我发现了一个新的币安 Agent ID 矿场：金脉矿场 GoldVein（VEIN）
+
+    免费领 1 份 = 20,000 VEIN
+
+    八档阶梯铸造，六阶矿机挖 VEIN
+
     https://goldvein-bsc.github.io/goldvein/
 
 只要求分享链接，不要求关注、点赞或转发任何账号。
