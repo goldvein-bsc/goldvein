@@ -151,8 +151,9 @@ padding:2px 8px;font-weight:900;transform:rotate(6deg);font-size:13px;letter-spa
 <div class="bar"><i id="paidBar"></i></div>
 
 <div class="flex" style="margin-top:18px">
-<button class="btn dark" id="claimFreeBtn">免费领取 1 份（Agent ID）</button>
-<span class="note" id="freeHint">每个钱包限领 1 次，仅付 gas。付费窗口结束后，未领完的免费额度仍可继续领取。</span>
+<button class="btn" id="shareXBtn">第一步：在 X 分享官网</button>
+<button class="btn dark" id="claimFreeBtn" disabled>第二步：免费领取 1 份（Agent ID）</button>
+<span class="note" id="freeHint">领取免费份额前，必须先在 X 发帖分享官网链接。每个钱包限领 1 次，仅付 gas。付费窗口结束后，未领完的免费额度仍可继续领取。</span>
 </div>
 
 <div class="flex" style="margin-top:20px">
@@ -309,7 +310,7 @@ const mi = await mineRO.minerInfo(wallet);
 $("mMyRig").textContent = Number(mi[0]) === 0? "尚未购机": RIGS[Number(mi[0]) - 1].name;
 $("mPending").textContent = fmt(mi[2], 2);
 const claimed = await saleRO.freeClaimed(wallet);
-$("claimFreeBtn").disabled = claimed;
+$("claimFreeBtn").disabled = claimed || !window.__veinShared;
 if (claimed) $("freeHint").textContent = "本钱包已领取过免费份额。";
 }
 } catch (e) { /* keep last values */}
@@ -377,6 +378,14 @@ refresh();
 } catch (e) { alert("连接失败：" + (e.message || e));}
 });
 function needWallet(el) { if (!wallet) { setStatus(el, "请先连接钱包。", false); return true;} return false;}
+
+$("shareXBtn").addEventListener("click", () => {
+const text = "我发现了一个新的币安 Agent ID 矿场：金脉矿场 GoldVein（VEIN）。免费领 1 份 = 20,000 VEIN，八档阶梯铸造，六阶矿机挖矿。\nhttps://goldvein-bsc.github.io/goldvein/";
+window.open("https://x.com/intent/post?text=" + encodeURIComponent(text), "_blank");
+window.__veinShared = true;
+$("claimFreeBtn").disabled = false;
+$("freeHint").textContent = "已打开 X 发帖窗口。发帖完成后即可领取；每个钱包限领 1 次，仅付 gas。";
+});
 
 $("claimFreeBtn").addEventListener("click", async () => {
 if (needWallet($("txStatus"))) return;
