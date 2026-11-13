@@ -7,22 +7,6 @@
 - 挖矿合约（BSC）：0x2f5BafE1Cdce34d3e5F37DCaf6938386e2f8e1B5
 - 两份合约源码均已在 Sourcify 完全匹配验证（exact_match），无管理员函数。
 
-## 第一步：先在 X 分享（SHARE FIRST — 强制）
-
-领取免费份额之前，必须先在 X（原 Twitter）发帖分享官网链接。未发帖分享者请勿直接调用 claimFree()。
-
-    430+ free claims in the FIRST HOUR 🔥
-
-    GoldVein (VEIN) — Agent ID mining farm on BSC
-
-    1 free share = 20,000 VEIN
-
-    8-tier sale, 6-tier mining rigs — mining starts tomorrow
-
-    https://goldvein-bsc.github.io/goldvein/
-
-只要求分享链接，不要求关注、点赞或转发任何账号。
-
 ## 免费领取（需币安 Agent ID）
 
 - 资格：钱包在币安 Agent ID 注册表（0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F）中 balanceOf > 0。
@@ -32,7 +16,7 @@
 
 ## 付费铸造
 
-- **分享前置（强制）：购买前同样必须先完成第一步的 X 分享（见上文 SHARE FIRST）。未发帖分享者请勿直接调用 buy()。**
+- 无需在 X 发帖：免费领取与付费铸造均可直接调用。
 - 每份 36,000 VEIN，共 2,500 份；八档阶梯价（BNB）：0.0015 / 0.0018 / 0.0020 / 0.0022 / 0.0024 / 0.0026 / 0.0028 / 0.0039，每档 312 份（末档 316 份）。
 - 窗口：北京时间 2026-11-13 20:00 至 11-14 20:00（24 小时），售罄即止。
 - 调用：先用 `costFor(uint256 shares)` 读出精确应付金额，再调用 `buy(uint256 shares)` 并附带恰好该金额的 BNB。单笔最多 100 份；金额不精确交易会回滚。
