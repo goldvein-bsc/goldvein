@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金脉矿场 · GoldVein — 六阶矿机挖矿协议</title>
+<meta name="description" content="金脉矿场 GoldVein (VEIN)：持有币安 Agent ID 免费领 1 份，其余按八档阶梯价铸造。六阶矿机，挖矿奖励来自固定储备。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#f3eddc; --paper2:#ece3cb; --ink:#1c1a14; --ink2:#4c4636;
+--amber:#d97c1e; --amber-d:#b25f10; --red:#b3372a; --line:#c9bc96;
+--card:#faf6ea; --ok:#3d7a35;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"Noto Sans SC",sans-serif;font-size:15px;line-height:1.75;
+background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(120,100,50,.05) 28px);}
+a{color:var(--amber-d)}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+/* 公告条 */
+.ticker{background:var(--ink);color:#e8dfc8;font-size:13px;overflow:hidden;white-space:nowrap;border-bottom:3px double var(--amber)}
+.ticker div{display:inline-block;padding:6px 0;animation:tick 40s linear infinite}
+@keyframes tick{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+/* 页眉 */
+header{border-bottom:2px solid var(--ink);background:var(--paper)}
+.head-in{max-width:1060px;margin:0 auto;padding:18px 20px 14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.seal{width:64px;height:64px;flex:0 0 64px;background:var(--red);color:#f7ead9;border-radius:6px;
+display:flex;align-items:center;justify-content:center;transform:rotate(-3deg);
+font-family:"Noto Serif SC",serif;font-weight:900;font-size:15px;line-height:1.25;text-align:center;
+box-shadow:2px 2px 0 rgba(28,26,20,.35);letter-spacing:2px}
+.brand h1{font-family:"Noto Serif SC",serif;font-weight:900;font-size:34px;letter-spacing:6px;line-height:1.1}
+.brand.en{font-size:12px;letter-spacing:4px;color:var(--ink2);text-transform:uppercase}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav a{color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;padding:6px 12px;border:1.5px solid transparent}
+nav a:hover{border-color:var(--ink)}
+#connectBtn{background:var(--ink);color:#f3eddc;border:none;padding:10px 18px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;letter-spacing:1px}
+#connectBtn:hover{background:var(--amber-d)}
+/* 主视觉 */
+.hero{max-width:1060px;margin:0 auto;padding:34px 20px 8px;display:flex;gap:28px}
+.hero-copy{flex:1;min-width:280px}
+.hero h2{font-family:"Noto Serif SC",serif;font-weight:900;font-size:44px;line-height:1.25;letter-spacing:2px}
+.hero h2.hl{color:var(--amber-d);border-bottom:5px solid var(--amber)}
+.hero p{margin-top:14px;color:var(--ink2);max-width:34em}
+.hero-vert{writing-mode:vertical-rl;font-family:"Noto Serif SC",serif;font-weight:900;font-size:21px;letter-spacing:8px;
+border-left:2px solid var(--ink);border-right:2px solid var(--ink);padding:6px 10px;color:var(--ink);height:fit-content}
+.countline{margin-top:18px;display:flex;gap:22px;flex-wrap:wrap}
+.countline.cell b{display:block;font-size:24px;font-family:ui-monospace,Menlo,monospace}
+.countline.cell span{font-size:12px;color:var(--ink2);letter-spacing:2px}
+#countdown{margin-top:14px;font-size:15px;font-weight:700}
+#countdown b{font-family:ui-monospace,Menlo,monospace;color:var(--red);font-size:19px}
+/* 区块 */
+main{max-width:1060px;margin:0 auto;padding:10px 20px 30px}
+section{margin-top:38px}
+.sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:16px}
+.sec-head.no{font-family:ui-monospace,Menlo,monospace;color:var(--amber-d);font-weight:700}
+.sec-head h3{font-family:"Noto Serif SC",serif;font-weight:900;font-size:24px;letter-spacing:3px}
+.sec-head.sub{color:var(--ink2);font-size:13px;margin-left:auto}
+.panel{background:var(--card);border:1.5px solid var(--ink);box-shadow:4px 4px 0 rgba(28,26,20,.18);padding:20px}
+.bar{height:14px;border:1.5px solid var(--ink);background:var(--paper2);position:relative;margin:6px 0 4px}
+.bar i{position:absolute;inset:0;width:0;background:repeating-linear-gradient(45deg,var(--amber),var(--amber) 8px,var(--amber-d) 8px,var(--amber-d) 16px)}
+.bar-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
+th{background:var(--paper2);font-weight:700;text-align:right}
+th:first-child,td:first-child{text-align:left}
+tr.cur td{background:#f7e3bd;font-weight:700}
+.btn{background:var(--amber);border:1.5px solid var(--ink);color:var(--ink);font-family:inherit;font-weight:700;
+padding:11px 22px;font-size:15px;cursor:pointer;letter-spacing:1px;box-shadow:3px 3px 0 rgba(28,26,20,.5)}
+.btn:hover{background:var(--amber-d);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn.dark{background:var(--ink);color:#f3eddc}
+.btn.ghost{background:transparent}
+input[type=number]{font-family:ui-monospace,Menlo,monospace;font-size:17px;padding:9px 10px;width:110px;border:1.5px solid var(--ink);background:#fff}
+.flex{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.note{font-size:13px;color:var(--ink2)}
+.warn{color:var(--red);font-weight:700}
+#txStatus{font-size:13px;margin-top:10px;min-height:1.6em}
+/* 矿机图鉴 */
+.rigs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.rig{background:var(--card);border:1.5px solid var(--ink);padding:0;box-shadow:4px 4px 0 rgba(28,26,20,.15);position:relative}
+.rig.plate{background:var(--ink);color:#e8dfc8;padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
+.rig.plate b{font-family:"Noto Serif SC",serif;letter-spacing:2px;font-size:16px}
+.rig.plate.tno{font-family:ui-monospace,Menlo,monospace;color:var(--amber);font-weight:700}
+.rig.spec{padding:12px 14px}
+.rig.spec div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:4px 0;font-size:14px}
+.rig.spec div:last-child{border-bottom:none}
+.rig.act{padding:0 14px 14px}
+.rivets{position:absolute;top:44px;right:10px;color:var(--line);font-size:10px;letter-spacing:3px}
+/* 规则 */
+.rules{counter-reset:rule;background:var(--card);border:1.5px solid var(--ink);padding:20px 22px}
+.rules li{list-style:none;padding:7px 0 7px 44px;position:relative;border-bottom:1px dashed var(--line)}
+.rules li:last-child{border-bottom:none}
+.rules li::before{counter-increment:rule;content:"第" counter(rule) "条";position:absolute;left:0;top:7px;
+font-weight:700;color:var(--amber-d);font-size:13px;white-space:nowrap}
+/* 页脚 */
+footer{border-top:2px solid var(--ink);margin-top:44px;background:var(--paper2)}
+.foot-in{max-width:1060px;margin:0 auto;padding:20px;font-size:13px;color:var(--ink2)}
+.foot-in.addr{word-break:break-all;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink)}
+/* 公告弹窗 */
+#noticeMask{position:fixed;inset:0;background:rgba(20,17,10,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#noticeBox{background:var(--paper);border:2px solid var(--ink);max-width:520px;width:100%;padding:26px 28px;box-shadow:8px 8px 0 rgba(0,0,0,.35);position:relative}
+#noticeBox h4{font-family:"Noto Serif SC",serif;font-weight:900;font-size:21px;letter-spacing:3px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:12px}
+#noticeBox.stamp{position:absolute;top:16px;right:18px;border:2.5px solid var(--red);color:var(--red);border-radius:4px;
+padding:2px 8px;font-weight:900;transform:rotate(6deg);font-size:13px;letter-spacing:2px;opacity:.85}
+@media(max-width:640px){.hero{flex-direction:column}.hero-vert{writing-mode:horizontal-tb;border:none;padding:0}.hero h2{font-size:32px}.brand h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div>铸造窗口：北京时间 11月13日 20:00 开售，3000 份（免费 500 + 付费 2,500）售完即止 · 挖矿开启时间：流动性添加后开启，预计 开售结束后 2 小时内启动 · 铸造一经链上确认不可撤销，销售期内不支持退款 ·&nbsp;</div></div>
+
+<header>
+<div class="head-in">
+<div class="seal">金脉<br>矿场</div>
+<div class="brand">
+<h1>金脉矿场</h1>
+<div class="en">GoldVein Mining Protocol · VEIN</div>
+</div>
+<nav>
+<a href="#mint">铸造</a><a href="#rigs">矿机图鉴</a><a href="#mine">挖矿</a><a href="#rules">规程</a>
+</nav>
+<button id="connectBtn">连接钱包</button>
+</div>
+</header>
+
+<div class="hero">
+<div class="hero-copy">
+<h2>地下一千米，<br>有一条<span class="hl">金脉</span>。</h2>
+<p>金脉矿场是一套运行在 BNB Chain 上的六阶矿机挖矿协议。持有币安 Agent ID 的钱包可免费领取一份 VEIN；其余份额按八档阶梯价铸造。买矿机、升阶、挖 VEIN——挖矿奖励只来自固定的 8,400 万枚储备，挖完即止，不增发。</p>
+<div id="countdown">铸造窗口尚未开启。</div>
+<div class="countline">
+<div class="cell"><b id="statFree">—</b><span>免费已领 / 500</span></div>
+<div class="cell"><b id="statPaid">—</b><span>付费已铸 / 2,500</span></div>
+<div class="cell"><b id="statTier">—</b><span>当前档位</span></div>
+<div class="cell"><b id="statPrice">—</b><span>当前单价 BNB</span></div>
+</div>
+</div>
+<div class="hero-vert">六阶矿机 · 一脉千金</div>
+</div>
+
+<main>
+<!-- 铸造 -->
+<section id="mint">
+<div class="sec-head"><span class="no">No.1</span><h3>铸造 VEIN</h3><span class="sub">每份付费 = 36,000 VEIN · 免费每份 20,000 VEIN</span></div>
+<div class="panel">
+<div class="bar-row"><span>免费池（Agent ID 专属）</span><span id="freeBarTxt">—</span></div>
+<div class="bar"><i id="freeBar"></i></div>
+<div class="bar-row" style="margin-top:10px"><span>付费池（八档阶梯）</span><span id="paidBarTxt">—</span></div>
+<div class="bar"><i id="paidBar"></i></div>
+
+<div class="flex" style="margin-top:18px">
+<button class="btn dark" id="claimFreeBtn">免费领取 1 份（Agent ID）</button>
+<span class="note" id="freeHint">每个钱包限领 1 次，仅付 gas。付费窗口结束后，未领完的免费额度仍可继续领取。</span>
+</div>
+
+<div class="flex" style="margin-top:20px">
+<label>购买份数 <input type="number" id="buyQty" value="1" min="1" max="100"></label>
+<span>应付 <b class="mono" id="buyCost">—</b> BNB</span>
+<button class="btn" id="buyBtn">按当前档位购买</button>
+</div>
+<div id="txStatus"></div>
+
+<table style="margin-top:18px">
+<tr><th>档位</th><th>份数区间</th><th>本档份数</th><th>单价（BNB）</th></tr>
+<tr data-tier="1"><td>第 1 档</td><td>1 – 312</td><td>312</td><td>0.00150</td></tr>
+<tr data-tier="2"><td>第 2 档</td><td>313 – 624</td><td>312</td><td>0.00180</td></tr>
+<tr data-tier="3"><td>第 3 档</td><td>625 – 936</td><td>312</td><td>0.00200</td></tr>
+<tr data-tier="4"><td>第 4 档</td><td>937 – 1,248</td><td>312</td><td>0.00220</td></tr>
+<tr data-tier="5"><td>第 5 档</td><td>1,249 – 1,560</td><td>312</td><td>0.00240</td></tr>
+<tr data-tier="6"><td>第 6 档</td><td>1,561 – 1,872</td><td>312</td><td>0.00260</td></tr>
+<tr data-tier="7"><td>第 7 档</td><td>1,873 – 2,184</td><td>312</td><td>0.00280</td></tr>
+<tr data-tier="8"><td>第 8 档</td><td>2,185 – 2,500</td><td>316</td><td>0.00390</td></tr>
+</table>
+<p class="note" style="margin-top:10px">跨档下单时，各份按各自所在档位的单价合计，合约按精确金额收款，多付一分也会退回交易（revert）。单笔最多 100 份。付款后 VEIN 立即到账，无需再领取。</p>
+</div>
+</section>
+
+<!-- 矿机图鉴 -->
+<section id="rigs">
+<div class="sec-head"><span class="no">No.2</span><h3>矿机图鉴</h3><span class="sub">购机款以 VEIN 支付并直接销毁 · 每钱包限持一台，可升阶</span></div>
+<div class="rigs" id="rigGrid"></div>
+</section>
+
+<!-- 挖矿 -->
+<section id="mine">
+<div class="sec-head"><span class="no">No.3</span><h3>挖矿面板</h3><span class="sub" id="mineSub">奖励按全网算力比例分配</span></div>
+<div class="panel">
+<div class="countline" style="margin-top:0">
+<div class="cell"><b id="mPower">—</b><span>全网总算力</span></div>
+<div class="cell"><b id="mReserve">—</b><span>储备剩余 VEIN</span></div>
+<div class="cell"><b id="mRate">—</b><span>每秒释放 VEIN</span></div>
+<div class="cell"><b id="mMyRig">—</b><span>我的矿机</span></div>
+<div class="cell"><b id="mPending">—</b><span>待领取 VEIN</span></div>
+</div>
+<div class="flex" style="margin-top:16px">
+<button class="btn" id="claimRewardBtn">领取挖矿奖励</button>
+<button class="btn ghost" id="upgradeBtn">升阶我的矿机</button>
+<span class="note">挖矿自北京时间 11月14日 22:00 起算；此前购机不产生奖励。升阶只补差价，待领奖励在升阶时自动结算。</span>
+</div>
+<div id="mineStatus" style="font-size:13px;margin-top:10px;min-height:1.6em"></div>
+</div>
+</section>
+
+<!-- 规程 -->
+<section id="rules">
+<div class="sec-head"><span class="no">No.4</span><h3>采矿规程</h3><span class="sub">全部条款由合约执行，无管理员</span></div>
+<ol class="rules">
+<li>总发行 3,000 份：免费 500 份（需币安 Agent ID，每份 20,000 VEIN，每钱包限 1 次）＋付费 2,500 份（每份 36,000 VEIN）。</li>
+<li>付费分 8 档，每档 312 份（末档含余数），单价 0.0015 → 0.0039 BNB，一档卖完自动进入下一档。</li>
+<li>销售窗口 24 小时：北京时间 11月13日 20:00 开售，售罄或到期即止。</li>
+<li>销售所得 BNB 全部先进入金库（treasury）。售罄或窗口到期后，由团队把所得 BNB 与对应 VEIN 加入 PancakeSwap 流动池；未售出的付费份额转回金库，未领取的免费额度继续留在合约里可领。</li>
+<li>矿机共六阶，以 VEIN 购买，购机款当场销毁。算力依次为 1 / 3 / 8 / 20 / 50 / 130。</li>
+<li>挖矿奖励来自固定储备 84,000,000 VEIN，按每秒 4.0509… VEIN 匀速释放约 240 天，按算力比例分配，储备挖完即止，合约不增发。</li>
+<li>VEIN 总量恒定 210,000,000 枚：铸造 100,000,000 · 挖矿储备 84,000,000 · 流动性储备 21,000,000 · 运营 5,000,000。</li>
+<li>两份合约均无管理员、无后门：没有增发、没有暂停、没有提现他人资产的函数。铸造一经链上确认不可撤销，销售期内不支持退款。</li>
+</ol>
+</section>
+</main>
+
+<footer>
+<div class="foot-in">
+<div>金脉矿场 GoldVein · BNB Chain</div>
+<div style="margin-top:6px">VEIN 代币 / 铸造合约：<span class="addr">0xB5Bb50828eB449e7b27AaAd8F7e0CFc621347CB8</span></div>
+<div>挖矿合约：<span class="addr">0x2f5BafE1Cdce34d3e5F37DCaf6938386e2f8e1B5</span></div>
+<div style="margin-top:6px">两份合约源码均已在 Sourcify 完全匹配验证（exact_match）。本页不构成投资建议；链上操作风险自担。</div>
+</div>
+</footer>
+
+<div id="noticeMask">
+<div id="noticeBox">
+<div class="stamp">矿场公告</div>
+<h4>重要 · 开售时间</h4>
+<p>铸造窗口于<b>北京时间 11月13日 20:00</b>开启，3,000 份（免费 500 + 付费 2,500）售完即止，窗口最长 24 小时。</p>
+<p style="margin-top:8px">挖矿预计在添加流动性后开启，不晚于开售结束后 2 小时（北京时间 11月14日 22:00 起算奖励）。</p>
+<button class="btn dark" id="noticeClose" style="margin-top:16px">知道了</button>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+<script>
+const SALE = "0xB5Bb50828eB449e7b27AaAd8F7e0CFc621347CB8";
+const MINE = "0x2f5BafE1Cdce34d3e5F37DCaf6938386e2f8e1B5";
+const START = 1794571200, END = 1794657600, MINE_START = 1794664800;
+const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-rpc.publicnode.com", "https://bsc-dataseed1.binance.org"];
+const SALE_ABI = [
+"function status() view returns (uint256,uint256,uint256,uint256,uint256,uint256,bool)",
+"function tierNow() view returns (uint256,uint256,uint256)",
+"function costFor(uint256) view returns (uint256)",
+"function claimFree()",
+"function buy(uint256) payable",
+"function hasAgentId(address) view returns (bool)",
+"function freeClaimed(address) view returns (bool)",
+"function balanceOf(address) view returns (uint256)",
+"function approve(address,uint256) returns (bool)",
+"function allowance(address,address) view returns (uint256)"
+];
+const MINE_ABI = [
+"function status() view returns (uint256,uint256,uint256,uint256,uint256)",
+"function minerInfo(address) view returns (uint256,uint256,uint256)",
+"function buyRig(uint256)",
+"function upgrade()",
+"function claim()"
+];
+const RIGS = [
+{ t: 1, name: "铁镐矿机", cost: 1000, power: 1, desc: "入场镐头，纯手工班组"},
+{ t: 2, name: "铜钻矿机", cost: 3000, power: 3, desc: "铜头风钻，单班三组"},
+{ t: 3, name: "钢芯矿机", cost: 8000, power: 8, desc: "合金钢芯，深孔爆破"},
+{ t: 4, name: "液压矿机", cost: 20000, power: 20, desc: "液压支架，机械化矿道"},
+{ t: 5, name: "熔火矿机", cost: 50000, power: 50, desc: "高温熔炼，矿浆直提"},
+{ t: 6, name: "龙脉钻机", cost: 120000, power: 130, desc: "直抵龙脉，矿场旗舰"}
+];
+let readProvider = null, saleRO, mineRO, wallet = null, saleRW, mineRW;
+async function pickRPC() {
+for (const u of RPCS) {
+try { const p = new ethers.JsonRpcProvider(u); await p.getBlockNumber(); return p;} catch (e) {}
+}
+return new ethers.JsonRpcProvider(RPCS[0]);
+}
+const fmt = (bn, d = 0) => Number(ethers.formatEther(bn)).toLocaleString("zh-CN", { maximumFractionDigits: d});
+function $(id) { return document.getElementById(id);}
+function setStatus(el, msg, ok) { el.textContent = msg; el.style.color = ok === true? "var(--ok)": ok === false? "var(--red)": "var(--ink2)";}
+
+async function refresh() {
+try {
+const s = await saleRO.status();
+const freeOut = Number(s[2]), paidOut = Number(s[3]);
+$("statFree").textContent = freeOut;
+$("statPaid").textContent = paidOut.toLocaleString("zh-CN");
+$("freeBar").style.width = (freeOut / 5) + "%";
+$("paidBar").style.width = (paidOut / 25) + "%";
+$("freeBarTxt").textContent = `已领 ${freeOut} / 500`;
+$("paidBarTxt").textContent = `已铸 ${paidOut} / 2,500`;
+const tn = await saleRO.tierNow();
+$("statTier").textContent = paidOut >= 2500? "已售罄": "第 " + tn[0] + " 档";
+$("statPrice").textContent = paidOut >= 2500? "—": ethers.formatEther(tn[1]);
+document.querySelectorAll("tr[data-tier]").forEach(tr => {
+tr.classList.toggle("cur", Number(tr.dataset.tier) === Number(tn[0]) && paidOut < 2500);
+});
+await updateCost();
+const ms = await mineRO.status();
+$("mPower").textContent = Number(ms[2]).toLocaleString("zh-CN");
+$("mReserve").textContent = fmt(ms[4]);
+$("mRate").textContent = (Number(ms[1]) / 1e18).toFixed(4);
+if (wallet) {
+const mi = await mineRO.minerInfo(wallet);
+$("mMyRig").textContent = Number(mi[0]) === 0? "尚未购机": RIGS[Number(mi[0]) - 1].name;
+$("mPending").textContent = fmt(mi[2], 2);
+const claimed = await saleRO.freeClaimed(wallet);
+$("claimFreeBtn").disabled = claimed;
+if (claimed) $("freeHint").textContent = "本钱包已领取过免费份额。";
+}
+} catch (e) { /* keep last values */}
+}
+async function updateCost() {
+const q = Math.max(1, Math.min(100, parseInt($("buyQty").value || "1", 10)));
+try { $("buyCost").textContent = ethers.formatEther(await saleRO.costFor(q));}
+catch (e) { $("buyCost").textContent = "—（份数超出剩余或未开售）";}
+}
+$("buyQty").addEventListener("input", updateCost);
+
+function tickClock() {
+const now = Math.floor(Date.now() / 1000);
+let target, label;
+if (now < START) { target = START; label = "距开售";}
+else if (now < END) { target = END; label = "距窗口关闭";}
+else if (now < MINE_START) { target = MINE_START; label = "距挖矿开启";}
+else { $("countdown").textContent = "挖矿进行中。"; return;}
+let d = target - now;
+const dd = Math.floor(d / 86400), hh = Math.floor(d % 86400 / 3600), mm = Math.floor(d % 3600 / 60), ss = d % 60;
+$("countdown").innerHTML = label + " <b>" + (dd > 0? dd + "天 ": "") +
+String(hh).padStart(2, "0") + ":" + String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0") + "</b>";
+}
+setInterval(tickClock, 1000); tickClock();
+
+/* 矿机图鉴 */
+$("rigGrid").innerHTML = RIGS.map(r => `
+<div class="rig"><div class="plate"><b>${r.name}</b><span class="tno">T${r.t}</span></div>
+<div class="rivets">● ●</div>
+<div class="spec">
+<div><span>售价</span><b class="mono">${r.cost.toLocaleString("zh-CN")} VEIN（销毁）</b></div>
+<div><span>算力</span><b class="mono">${r.power}</b></div>
+<div><span>说明</span><span>${r.desc}</span></div>
+</div>
+<div class="act"><button class="btn" data-buy-rig="${r.t}">购买此矿机</button></div>
+</div>`).join("");
+
+/* 钱包 */
+async function loadWC() {
+if (window["@walletconnect/ethereum-provider"]) return window["@walletconnect/ethereum-provider"].EthereumProvider;
+const urls = [
+"https://unpkg.com/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js",
+"https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js"
+];
+for (const u of urls) {
+try {
+await new Promise((res, rej) => { const s = document.createElement("script"); s.src = u; s.onload = res; s.onerror = rej; document.head.appendChild(s);});
+if (window["@walletconnect/ethereum-provider"]) return window["@walletconnect/ethereum-provider"].EthereumProvider;
+} catch (e) {}
+}
+throw new Error("WalletConnect 加载失败");
+}
+$("connectBtn").addEventListener("click", async () => {
+try {
+const EProvider = await loadWC();
+const wc = await EProvider.init({ projectId: "ff5985647ed78916bed0155d2ff84a1c", chains: [56], showQrModal: true});
+await wc.connect();
+const bp = new ethers.BrowserProvider(wc);
+const signer = await bp.getSigner();
+wallet = await signer.getAddress();
+saleRW = new ethers.Contract(SALE, SALE_ABI, signer);
+mineRW = new ethers.Contract(MINE, MINE_ABI, signer);
+$("connectBtn").textContent = wallet.slice(0, 6) + "…" + wallet.slice(-4);
+refresh();
+} catch (e) { alert("连接失败：" + (e.message || e));}
+});
+function needWallet(el) { if (!wallet) { setStatus(el, "请先连接钱包。", false); return true;} return false;}
+
+$("claimFreeBtn").addEventListener("click", async () => {
+if (needWallet($("txStatus"))) return;
+try {
+setStatus($("txStatus"), "正在核验 Agent ID 并领取…");
+const tx = await saleRW.claimFree();
+await tx.wait();
+setStatus($("txStatus"), "领取成功：20,000 VEIN 已到账。tx " + tx.hash, true);
+refresh();
+} catch (e) { setStatus($("txStatus"), "领取失败：" + (e.reason || e.shortMessage || e.message), false);}
+});
+$("buyBtn").addEventListener("click", async () => {
+if (needWallet($("txStatus"))) return;
+const q = Math.max(1, Math.min(100, parseInt($("buyQty").value || "1", 10)));
+try {
+const cost = await saleRO.costFor(q);
+setStatus($("txStatus"), `正在按当前档位购买 ${q} 份，应付 ${ethers.formatEther(cost)} BNB…`);
+const tx = await saleRW.buy(q, { value: cost});
+await tx.wait();
+setStatus($("txStatus"), `购买成功：${(q * 36000).toLocaleString("zh-CN")} VEIN 已到账。tx ` + tx.hash, true);
+refresh();
+} catch (e) { setStatus($("txStatus"), "购买失败：" + (e.reason || e.shortMessage || e.message), false);}
+});
+document.querySelectorAll("[data-buy-rig]").forEach(btn => btn.addEventListener("click", async () => {
+if (needWallet($("mineStatus"))) return;
+const tier = Number(btn.dataset.buyRig), rig = RIGS[tier - 1];
+try {
+const cost = ethers.parseEther(String(rig.cost));
+const allow = await saleRO.allowance(wallet, MINE);
+if (allow < cost) { setStatus($("mineStatus"), "正在授权 VEIN 给挖矿合约…"); const atx = await saleRW.approve(MINE, cost); await atx.wait();}
+setStatus($("mineStatus"), `正在购买 ${rig.name}（${rig.cost.toLocaleString("zh-CN")} VEIN 将被销毁）…`);
+const tx = await mineRW.buyRig(tier);
+await tx.wait();
+setStatus($("mineStatus"), `购机成功：${rig.name} 已上岗，算力 ${rig.power}。tx ` + tx.hash, true);
+refresh();
+} catch (e) { setStatus($("mineStatus"), "购机失败：" + (e.reason || e.shortMessage || e.message), false);}
+}));
+$("upgradeBtn").addEventListener("click", async () => {
+if (needWallet($("mineStatus"))) return;
+try {
+const mi = await mineRO.minerInfo(wallet);
+const cur = Number(mi[0]);
+if (cur === 0) { setStatus($("mineStatus"), "尚未购机，无可升阶。", false); return;}
+if (cur >= 6) { setStatus($("mineStatus"), "已是最高阶（六阶）。", false); return;}
+const diff = ethers.parseEther(String(RIGS[cur].cost - RIGS[cur - 1].cost));
+const allow = await saleRO.allowance(wallet, MINE);
+if (allow < diff) { setStatus($("mineStatus"), "正在授权 VEIN 给挖矿合约…"); const atx = await saleRW.approve(MINE, diff); await atx.wait();}
+setStatus($("mineStatus"), `正在升阶到 ${RIGS[cur].name}（补差价将被销毁）…`);
+const tx = await mineRW.upgrade();
+await tx.wait();
+setStatus($("mineStatus"), "升阶成功。tx " + tx.hash, true);
+refresh();
+} catch (e) { setStatus($("mineStatus"), "升阶失败：" + (e.reason || e.shortMessage || e.message), false);}
+});
+$("claimRewardBtn").addEventListener("click", async () => {
+if (needWallet($("mineStatus"))) return;
+try {
+setStatus($("mineStatus"), "正在领取挖矿奖励…");
+const tx = await mineRW.claim();
+await tx.wait();
+setStatus($("mineStatus"), "领取成功。tx " + tx.hash, true);
+refresh();
+} catch (e) { setStatus($("mineStatus"), "领取失败：" + (e.reason || e.shortMessage || e.message), false);}
+});
+
+/* 公告弹窗 */
+if (!sessionStorage.getItem("gv-notice")) { $("noticeMask").style.display = "flex";}
+$("noticeClose").addEventListener("click", () => { sessionStorage.setItem("gv-notice", "1"); $("noticeMask").style.display = "none";});
+
+(async () => {
+readProvider = await pickRPC();
+saleRO = new ethers.Contract(SALE, SALE_ABI, readProvider);
+mineRO = new ethers.Contract(MINE, MINE_ABI, readProvider);
+refresh();
+setInterval(refresh, 20000);
+})();
+</script>
+</body>
+</html>
